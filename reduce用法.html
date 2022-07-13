@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // array.reduce(function(pre, currentValue, currentIndex, arr), initialValue);
+        /*pre: 必需。初始值, 或者计算结束后的返回值。
+          currentValue： 必需。当前元素。
+          currentIndex： 可选。当前元素的索引；                     
+          arr： 可选。当前元素所属的数组对象。
+          initialValue: 可选。传递给函数的初始值，相当于pre的初始值。*/
+        //reduce里面有一定要return,return出去的值也要注意
+
+        let arr2 = [9, 4, 3, 6, 9];
+        //基本类型去重
+        let set = arr2.reduce((pre, cur) => {
+            !pre.includes(cur) && pre.push(cur)
+            return pre
+        }, [])
+        console.log(set);
+
+        //引用类型去重
+        let result = [
+            {
+                subject: "数学",
+                marks: 80
+            },
+            {
+                subject: "数学",
+                marks: 90
+            },
+            {
+                subject: "英语",
+                marks: 80
+            },
+        ]
+        let object = {}
+        let array = result.reduce((pre, cur) => {
+            // 把obj[cur.marks]设为一个真值,这样存过之后就有了 
+            // &&运算符取得是后面的值,即pre.push(cur),取得是从1开始的值
+            // object[cur.marks] ? "" : object[cur.marks] = true && pre.push(cur)
+            if (!object[cur.marks]) {
+                object[cur.marks] = true
+                pre.push(cur)
+            }
+            return pre
+        }, [])
+        console.log(array,"..........");
+
+        //数组变对象
+        let arr1 = [{ a: 1, b: 10 }, { a: 2, b: 20 }, { a: 3, b: 30 }]
+        let obj = {}
+        arr1.forEach((item, index) => {
+            Object.keys(item).forEach(each => {
+                obj[`${each}${index + 1}`] = item[each]
+            })
+        })
+        console.log(obj);
+        let a = arr1.reduce((pre, cur, index) => {
+            Object.keys(cur).forEach((item) => {
+                pre[`${item}${index + 1}`] = cur[item]
+            })
+            return pre
+        }, {})
+        console.log(a);
+
+        // 求和
+        let sum = arr2.reduce((pre, cur) => {
+            return pre + cur
+        }, 0)
+        console.log(sum)
+
+        let max = arr2.reduce((prev, cur) => {
+            return Math.max(prev, cur);
+        })
+        console.log(max);
+        //扁平一个二维数组
+        let arr3 = [[1, 2, 8], [3, 4, 9], [5, 6, 10]];
+        let res = arr3.reduce((pre, cur) => {
+            return pre.concat(cur)
+        }, []);
+        console.log(res)
+        //求字符串中各个字符出现的次数
+        const str = 'jordanbryantjamescurrydurant';
+        const res1 = str.split('').reduce((pre, cur) => {
+            pre[cur] ? pre[cur]++ : pre[cur] = 1;
+            return pre;
+        }, {});
+        let arr = []
+        let num = Math.max(...new Set(Object.values(res1)))
+        let value;
+        for (let keys in res1) {
+            if (res1[keys] == num) {
+                value = keys
+                break
+            }
+        }
+        console.log(`出现最多的字母为${value},出现的次数为${num}`);
+    </script>
+
+</body>
+
+</html>

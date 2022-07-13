@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // continue用于for(结合if语句使用),for...in,while,do...while循环体中
+        // break用于for(结合if语句使用),for...in,while,do...while循环体中,或用于switch语句中
+        // return 是函数返回语句，但是返回的同时也将函数停止。
+        // 相同之处：三个都会将语句停止。
+        // 不同之处：
+        // 1、break：是立即结束语句，并跳出语句，进行下个语句执行。
+        // 2、continue：是停止当前语句，并从头执行该语句。
+        // 3、return ：停止函数。
+        // 4、使用的语句环境不一样，break和continue是用在循环或switch语句中，return是用在函数语句中。
+        let object = {
+            id: 1,
+            value: "码代码"
+        }
+        for (const key in object) {
+            console.log(key); //id
+            if (key == "id") {
+                break
+            }
+        }
+        // 函数中写了return之后,后面的代码都不会再执行
+        function a(){
+            if(true){
+                return false
+            }
+            console.log("a执行了");
+        }
+        //b函数调用a函数,a函数中的return,并不影响b函数中后面代码的执行
+        function b(){
+            a()
+            console.log("b执行了");  //b执行了
+        }
+        b()
+        // swicth中如果想要return,需写在函数中,且不要写break
+        function c() {
+            let num = 10
+            switch (num) {
+                case (10):
+                    return "c执行了";
+                // break;
+                default:
+                    return 1;
+                // break;
+            }
+        }
+        let foo = c()
+        console.log(foo);
+    </script>
+</body>
+
+</html>

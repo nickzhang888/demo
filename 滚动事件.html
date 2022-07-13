@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style type="text/css">
+    #showIt {
+      width: 200px;
+      height: 200px;
+      background-color: red;
+      position: absolute;
+      top: 1500px;
+    }
+  </style>
+</head>
+
+<body style="height:2000px;">
+  <div id="showIt"></div>
+
+  <script>
+    //  适用于 window.addEventListener('scroll', this.scrollToTop)
+    //  对文档中某一处元素的scroll事件@scroll="handleScroll($event)",把documnet换成e.target
+    document.onscroll = function () {
+      let scrollTop = Math.round(document.documentElement.scrollTop || document.body.scrollTop)
+      let clientHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+      let offetsetTop = document.getElementById('showIt').offsetTop  //元素距离顶部的高度
+      let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+      if (scrollTop + clientHeight >= offetsetTop) {
+        console.log('滚动到该元素了')
+      }
+      if (scrollTop >= scrollHeight - clientHeight) {
+        console.log('滚动到底部了')
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      //红灯3秒亮一次，绿灯1秒亮一次，黄灯2秒亮一次；如何使用Promise让三个灯不断交替重复亮灯？
+      function mylight(value, time) {
+        return new Promise((resolve, reject) => {
+          setTimeout((params) => {
+            // console.log(value);
+            // 有了resolve第二个以及后面.then才会执行
+            resolve(console.log(value));
+          }, time);
+        });
+      }
+
+      let step = () => {
+        new Promise((resolve) => {
+          resolve();
+        })
+          .then(() => {
+            return mylight("red", 3000);
+          })
+          .then((res) => {
+            return mylight("green", 1000);
+          })
+          .then((res) => {
+            return mylight("yellow", 1000);
+          })
+          .then((res) => {
+            // 递归执行
+            step();
+          });
+      };
+      step();
+
+      // 因为new Promise()的执行是马上执行的。
+      // 所以要么你递增 timeout 的时间，要么在一个 Promise resolved 之后再创建新的 Promise。
+      // 用reduce相当于往后面叠加.then,跟上面的重复亮灯代码一样
+      // const arr = [
+      //     {
+      //         color:"red",
+      //         time:3000,
+      //     },
+      //     {
+      //         color:'green',
+      //         time:1000,
+      //     },
+      //     {
+      //         color:'yellow',
+      //         time:1000
+      //     }
+      // ]
+      // function b(arr) {
+      //     arr.reduce((pre, cur,index) => {
+      //         return pre.then(() => {
+      //             return new Promise(resolve => {
+      //                 setTimeout(() => {
+      //                     resolve(console.log(cur.color))
+      //                 }, cur.time)
+      //             })
+      //         })
+      //     }, Promise.resolve()).then((params) => {
+      //         b(arr)
+      //     })
+      //     // 以上代码简写为:
+      //     // arr.reduce((pre, cur) => pre.then(() => new Promise(r => setTimeout(() => r(console.log(cur.color)), cur.time))), Promise.resolve()).then((params) => b(arr))
+      // }
+      // b(arr)
+
+      //p.then()里面的参数如果不是函数的话，会发生透传,相当于同步执行代码
+      // let result = arr.reduce((pre, cur) => {
+      //     return pre.then(
+      //         new Promise(resolve => {
+      //             setTimeout(() => {
+      //                 resolve(console.log(cur))
+      //             }, 1000)
+      //         })
+      //     )
+      // }, Promise.resolve())
+
+      // console.log(result);
+    </script>
+  </body>
+</html>

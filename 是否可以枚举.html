@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // const obj = { [Symbol('foo')]: 2 };
+        // console.log(Object.getOwnPropertySymbols(obj));
+
+        function Person() {
+            this.name = "小明"
+        };
+        Person.prototype = {
+            hobby: "打球",
+        };
+
+        var person = new Person();
+        Object.defineProperty(person, "age", {
+            value: 18,
+            enumerable: false
+        });
+
+        // for...in,遍历自身的和原型上继承的可枚举属性
+        for (var keys in person) {
+            console.log(keys);  // name,hobby
+        }
+
+        // Object.keys,遍历自身可枚举属性
+        console.log(Object.keys(person));  //["name"]
+
+        // JSON.stringify,字符串自身可枚举属性
+        console.log(JSON.stringify(person));    //{"name":"小明"}
+
+        console.log(Object.assign({}, person));   //{name: "小明"}
+
+
+        //每个对象都有propertyIsEnumerable()方法，这个方法可以判断出指定的属性是否可枚举。
+        // 用法：obj.propertyIsEnumerable("属性名");
+        console.log(person.propertyIsEnumerable('name')); //true
+        console.log(person.propertyIsEnumerable('age'));//false
+        console.log(person.propertyIsEnumerable('hobby'));//false
+    </script>
+
+</body>
+
+</html>

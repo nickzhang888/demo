@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            height: 2000px;
+
+        }
+
+        .wrapper {
+            height: 200px;
+            width: 200px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="wrapper">
+        </div>
+    </div>
+    <script>
+        let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight
+        let clientHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+        function showTop() {
+            var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+            console.log('滚动条位置：' + scrollTop);
+        }
+        // function throttle(fn, delay) {
+        //     let flag = true
+        //     return function () {
+        //         if (flag) {
+        //             flag = false
+        //             setTimeout(() => {
+        //                 fn()
+        //                 flag = true
+        //             }, delay)
+        //         }
+        //     }
+        // }
+
+        // function throttle(fn, delay) {
+        //     let timer;
+        //     return function () {
+        //         if (timer) {
+        //             return
+        //         }
+        //         timer = setTimeout(() => {
+        //             fn()
+        //             // timer=null起不到终止计时器的作用，只是给timer变量赋了值 ,计时器依然存在
+        //             timer = null
+        //         }, delay)
+        //     }
+        // }
+
+        // window.onscroll = throttle(showTop, 1000)
+        // window.addEventListener('scroll',throttle(showTop, 1000))
+
+        function debounce(fn, delay) {
+            let timer;
+            function inner() {
+                if (timer) {
+                    clearTimeout(timer)
+                }
+                console.log(timer); 
+                timer = setTimeout(fn, delay)
+                console.log(timer);
+            }
+            return inner
+        }
+
+        window.onscroll = debounce(showTop,1000)
+
+    </script>
+
+</body>
+
+</html>

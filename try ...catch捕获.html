@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 1.自定义抛异常
+        (function () {
+            let x = null
+            let y = "";
+            try {
+                throw new Error()
+            } catch (e) {
+                // 这个e是抛出的错误
+                // console.log(e);
+                (e = 1), (y = 2), (x = 4)
+                console.log(e)
+            }
+            console.log(x)
+            console.log(y)
+        })()
+
+        function greeting() {
+            throw ("hello world")
+        }
+
+        function sayHi() {
+            try {
+                const data = greeting()
+                console.log("正确:", data);
+            } catch (error) {
+                console.log("错误:", error);
+            }
+        }
+        sayHi()
+
+        // 2.捕获抛出的异常
+        const a = null
+        try {
+            //先从上到下执行try里面的语句，一旦发现错误则跳出try，不再执行try下面的语句
+            const b = JSON.parse(a)
+            console.log(a.name)
+            const c =1
+            console.log(c);
+        } catch (e) {
+            console.log("发生异常:" + e)
+        }
+        // 但会正常执行try...catch以外的语句
+        console.log('d');
+       
+
+    </script>
+</body>
+
+</html>

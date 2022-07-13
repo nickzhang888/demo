@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let tree = [
+            {
+                id: '1',
+                title: '节点1',
+                children: [
+                    {
+                        id: '1-1',
+                        title: '节点1-1'
+                    }
+                ]
+            },
+            {
+                id: '2',
+                title: '节点2',
+                children: [
+                    {
+                        id: '2-1',
+                        title: '节点2-1',
+                        children: [
+                            {
+                                id: '2-1-1',
+                                title: '节点2-1-1',
+                            }
+                        ]
+                    },
+                    {
+                        id: '2-2',
+                        title: '节点2-2'
+                    }
+                ]
+            },
+        ]
+        let value;
+        function treeFind(tree, id) {
+            // tree.find(item => {
+            //     if (item.id === id) {
+            //         value = item
+            //     }
+            //     item.children && treeFind(item.children, id)
+            // })
+            for (const item of tree) {
+                if (item.id === id) {
+                    return item
+                }
+                if (item.children) {
+                    const res = treeFind(item.children, id)
+                    if (res) return res
+                }
+            }
+            return null
+        }
+        let result = treeFind(tree, '2-1-1')
+        console.log(value, result)
+    </script>
+</body>
+
+</html>

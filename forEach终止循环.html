@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        var array = ["吃饭", "睡觉", "打豆豆", "写代码"];
+        try {
+            // 执行到第3次，结束循环
+            array.forEach((item, index) => {
+                if (item == "打豆豆") {
+                    throw new Error("打毛线");
+                }
+                console.log(item);
+            });
+            console.log("我能执行吗?");
+
+        } catch (e) {
+            //e.message   上面抛出的异常
+            console.error(e);
+        };
+        // 下面的代码不影响继续执行
+        console.log("继续执行");
+
+
+        for (var i = 0; i < array.length; i++) {
+            if (array[i] == "睡觉") {
+                continue
+            }
+            //如果直接跳出当前循环那么下面的代码也不执行
+            console.log("进来:", i);
+
+        };
+    </script>
+</body>
+
+</html>

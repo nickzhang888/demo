@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let p1 = new Promise((resolve, reject) => {
+            setTimeout(resolve, 400, 'one');
+        });
+        // let p2 = Promise.reject("two");
+        let p3 = new Promise((resolve, reject) => {
+            setTimeout(resolve, 1000, 'three');
+        });
+        let p4 = Promise.resolve("four");
+        let p5 = new Promise((resolve, reject) => {
+            // reject('reject');
+            setTimeout(resolve, 500, 'five');
+        });
+
+        // Promise.all([p1,p3,p4,p5]).then(values => {
+        //     console.log(values,"all"); 
+        // }).catch((err) => {
+        //     console.log(err,"allBad"); //有一个回调函数失败则全部失败,失败的原因是第一个失败 promise 的结果。
+        // })
+        Promise.allSettled([p1,p3,p4,p5]).then(values => {
+            console.log(values,"allSettled"); 
+        }).catch((err) => {
+            console.log(err,"allSettledBad"); //不关心成功或者失败,只关心结果
+        })
+        // Promise.any([p1,p2,p3,p4,p5]).then(values => {
+        //     console.log(values,"any"); 
+        // }).catch((err) => {
+        //     console.log(err,"anyBad"); //返回承诺中的第一个成功的承诺
+        // })
+        // Promise.race([p1,p2,p3,p4,p5]).then(values => {
+        //     console.log(values,"race"); 
+        // }).catch((err) => {
+        //     console.log(err,"raceBad"); //返回参数中最快的那个承诺，无论它是成功还是失败
+        // })
+    </script>
+</body>
+
+</html>

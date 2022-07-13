@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let tree = [
+            {
+                id: '1',
+                title: '节点1',
+                children: [
+                    {
+                        id: '1-1',
+                        title: '节点1-1'
+                    }
+                ]
+            },
+            {
+                id: '2',
+                title: '节点2',
+                children: [
+                    {
+                        id: '2-1',
+                        title: '节点2-1'
+                    },
+                    {
+                        id: '2-2',
+                        title: '节点2-2'
+                    }
+                ]
+            },
+        ]
+        // let b = 0;
+        // function treeFind(tree, id) {
+        //     for (let key in tree) {
+        //         let item = tree[key]
+        //         if (item.id == id) {
+        //             return item
+        //         }
+        //         if (item.children) {
+        //             b += 1
+        //             const res = treeFind(item.children, id)
+        //             if (res) return res
+        //         }
+        //     }
+        //     // console.log(a);
+
+        // }
+        // let a = treeFind(tree, "2")
+        // console.log(a, b);
+
+        let arr = []
+        function scopeTreeFind(tree, func) {
+            let node, list = [...tree]
+            // debugger
+            while (node = list.shift()) {
+                func(node)
+                if (node.children) {
+                    list = [...list, ...node.children]
+                }
+            }
+        }
+
+        scopeTreeFind(tree, node => { arr.push(node.title) })
+
+        console.log(arr);
+
+        let array = [
+            {
+                "alarmTime": null,
+                "alarmType": 1,
+                "alarmName": "离岗",
+                "totalCount": 4602
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 2,
+                "alarmName": "抽烟",
+                "totalCount": 14
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 3,
+                "alarmName": "打电话",
+                "totalCount": 18
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 4,
+                "alarmName": "打哈欠",
+                "totalCount": 22
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 5,
+                "alarmName": "视线偏移",
+                "totalCount": 20
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 6,
+                "alarmName": "中度疲劳",
+                "totalCount": 27
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 7,
+                "alarmName": "重度疲劳",
+                "totalCount": 22
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 8,
+                "alarmName": "身份识别异常",
+                "totalCount": 24
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 9,
+                "alarmName": "红外阻断墨镜",
+                "totalCount": 0
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 1,
+                "alarmName": "离岗",
+                "totalCount": 8
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 2,
+                "alarmName": "抽烟",
+                "totalCount": 5
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 3,
+                "alarmName": "打电话",
+                "totalCount": 28
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 4,
+                "alarmName": "打哈欠",
+                "totalCount": 5
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 5,
+                "alarmName": "视线偏移",
+                "totalCount": 2529
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 6,
+                "alarmName": "中度疲劳",
+                "totalCount": 16
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 7,
+                "alarmName": "重度疲劳",
+                "totalCount": 12
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 8,
+                "alarmName": "身份识别异常",
+                "totalCount": 9
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 9,
+                "alarmName": "红外阻断墨镜",
+                "totalCount": 4
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 1,
+                "alarmName": "离岗",
+                "totalCount": 8
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 2,
+                "alarmName": "抽烟",
+                "totalCount": 25
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 3,
+                "alarmName": "打电话",
+                "totalCount": 28
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 4,
+                "alarmName": "打哈欠",
+                "totalCount": 55
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 5,
+                "alarmName": "视线偏移",
+                "totalCount": 2529
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 6,
+                "alarmName": "中度疲劳",
+                "totalCount": 216
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 7,
+                "alarmName": "重度疲劳",
+                "totalCount": 122
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 8,
+                "alarmName": "身份识别异常",
+                "totalCount": 19
+            },
+            {
+                "alarmTime": null,
+                "alarmType": 9,
+                "alarmName": "红外阻断墨镜",
+                "totalCount": 64
+            }
+        ]
+        let obj = {}
+        let newArr = array.reduce((pre, cur) => {
+            if (!obj[cur.alarmType]) {
+                obj[cur.alarmType] = true
+                cur.totalCount = [cur.totalCount]
+                pre.push({ ...cur, name: "zs" })
+            } else {
+                let index = pre.findIndex(item => item.alarmType == cur.alarmType)
+                pre[index].totalCount.push(cur.totalCount)
+            }
+            return pre
+        }, [])
+        console.log(obj, newArr);
+
+    </script>
+</body>
+
+</html>

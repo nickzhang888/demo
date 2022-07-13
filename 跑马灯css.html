@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        div{
+            width: 680px;
+            height: 170px;
+            margin:100px auto;
+            background-color: #ddd;
+            overflow: hidden;
+        }
+        div >ul{
+            width: 200%;
+            list-style: none;
+            /*1.设置的名称*/
+            animation-name: move;
+            /*2.设置动画的耗时*/
+            animation-duration: 7s;
+            /*3.市场无限循环*/
+            animation-iteration-count: infinite;
+            /*4.设置时间函数*/
+            animation-timing-function: linear;
+        }
+
+        div > ul > li{
+           width:170px;
+           float: left;
+        }
+        div > ul > li　> img{
+            width:100%;
+        }
+        /*鼠标上移，停止动画*/
+        div:hover > ul{
+            cursor: pointer;
+            animation-play-state: paused;
+        }
+
+        /*创建动画*/
+        @keyframes move {
+           0%{
+                transform:translateX(0);
+            }
+           100%{
+                transform:translateX(-680px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <ul>
+        <li><img src="./imgs/1.png" alt=""></li>
+        <li><img src="./imgs/2.png" alt=""></li>
+        <li><img src="./imgs/3.png" alt=""></li>
+        <li><img src="./imgs/4.png" alt=""></li>
+        <li><img src="./imgs/5.png" alt=""></li>
+        <li><img src="./imgs/6.png" alt=""></li>
+        <li><img src="./imgs/7.png" alt=""></li>
+        <li><img src="./imgs/8.png" alt=""></li>
+    </ul>
+    <ul>
+        <li><img src="./imgs/1.png" alt=""></li>
+        <li><img src="./imgs/2.png" alt=""></li>
+        <li><img src="./imgs/3.png" alt=""></li>
+        <li><img src="./imgs/4.png" alt=""></li>
+        <li><img src="./imgs/5.png" alt=""></li>
+        <li><img src="./imgs/6.png" alt=""></li>
+        <li><img src="./imgs/7.png" alt=""></li>
+        <li><img src="./imgs/8.png" alt=""></li>
+    </ul>
+</div>
+
+</body>
+</html>

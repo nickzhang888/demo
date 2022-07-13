@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input id="test"></input>
+        <div id="test1"></div>
+    </div>
+    <script>
+        var obj = {};
+        Object.defineProperty(obj, 'hello', {
+            get: function () {
+                //我们在这里拦截到了数据
+                console.log("get方法被调用");
+            },
+            set: function (newValue) {
+                //改变数据的值，拦截下来额
+                console.log("set方法被调用");
+                document.getElementById('test').value = newValue;
+                document.getElementById('test1').innerHTML = newValue;
+            }
+        });
+        //obj.hello;
+        obj.hello = '123';
+        document.getElementById('test').addEventListener('input', function (e) {
+            obj.hello = e.target.value;//触发它的set方法
+        })
+
+        // var app = document.getElementById("app")
+        // let dom = nodeToFragment(app)
+        // console.log(dom);
+
+        // function nodeToFragment(node) {
+        //     var fra = document.createDocumentFragment()
+        //     // debugger
+        //     var child;
+        //     //使用appendChid方法将原dom树中的节点添加到DocumentFragment中时，会删除原dom树的节点。
+        //     while (child = node.firstChild) {
+        //         fra.appendChild(child)
+        //     }
+        //     return fra
+        // }
+    </script>
+</body>
+
+</html>

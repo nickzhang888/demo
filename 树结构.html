@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let tree = [
+            {
+                id: '1',
+                title: '节点1',
+                children: [
+                    {
+                        id: '1-1',
+                        title: '节点1-1'
+                    }
+                ]
+            },
+            {
+                id: '2',
+                title: '节点2',
+                children: [
+                    {
+                        id: '2-1',
+                        title: '节点2-1'
+                    },
+                    {
+                        id: '2-2',
+                        title: '节点2-2'
+                    }
+                ]
+            },
+        ]
+        // 广度优先遍历(节点1,节点2,节点1-1,节点2-1,节点2-2,先遍历大节点,再遍历子节点)
+        function scopeTree(tree, func) {
+            let node, list = [...tree]
+            while (node = list.shift()) {
+                func(node)
+                node.children && list.push(...node.children)
+            }
+        }
+        // 深度优先遍历
+        // 1.先序遍历(节点1,节点1-1,节点2,节点2-1,节点2-2,先遍历完一个节点及其子节点,再遍历另一个节点及其子节点)
+        function deepTree(tree, func) {
+            tree.forEach(data => {
+                func(data)
+                data.children && deepTree(data.children, func) // 递归遍历子树
+            })
+        }
+        // 2.后序遍历(节点1-1,节点1,节点2-1,节点2-2,节点2,先遍历完一个子节点及其父节点,再遍历另一个子节点及其父节点)
+        function deepTreeLater(tree, func) {
+            tree.forEach(data => {
+                data.children && deepTreeLater(data.children, func) // 递归遍历子树
+                func(data)
+            })
+        }
+        //树结构筛选(0,1,2,3,4)
+        function treeFilter(tree, func) {
+            // 使用map复制一下节点，避免修改到原树
+            return tree.map(node => ({ ...node })).filter(node => {
+                node.children = node.children && treeFilter(node.children, func)
+                return func(node) || (node.children && node.children.length)
+            })
+        }
+        // 1. 查找节点
+        function treeFind(tree, func) {
+            for (const data of tree) {
+                //相当于func = node => node.id == '2-1'
+                if (func(data)) {
+                    return data
+                }
+                if (data.children) {
+                    const res = treeFind(data.children, func)
+                    if (res) return res
+                }
+            }
+            return null
+        }
+        // 2. 查找节点路径(回溯法)
+        function treeFindPath(tree, func, path = []) {
+            // if (!tree) return []
+            for (const data of tree) {
+                // 假设满足条件,直接放到数组里
+                path.push(data.id)
+                if (func(data)) {
+                    return path
+                }
+                if (data.children) {
+                    const res = treeFindPath(data.children, func, path)
+                    // 只有当数组的长度大于0才返回值
+                    if (res.length) return res
+                }
+                // 条件都不满足,则直接删除,对应前面的push
+                path.pop()
+            }
+            return []
+        }
+        scopeTree(tree, node => console.log("广度优先遍历:", node.title))
+
+        deepTree(tree, node => console.log("深(先序遍历)", node.title))
+
+        deepTreeLater(tree, node => console.log("深(后序遍历)", node.title))
+
+        let result1 = treeFindPath(tree, node => node.id === '2')
+
+        let treeFilt = treeFilter(tree, node => node.id == '1-1')
+
+        let result2 = treeFind(tree, node => node.id == '2-1')
+        console.log(result1)
+    </script>
+</body>
+
+</html>

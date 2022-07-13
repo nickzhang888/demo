@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const list = [
+            {
+                id: 0,
+                // parentId: null,
+            },
+            {
+                id: 1,
+                parentId: 0,
+            },
+            {
+                id: 2,
+                parentId: 4
+            },
+            {
+                id: 3,
+                parentId: 4
+            },
+            {
+                id: 4,
+                parentId: 0
+            },
+        ]
+        // 此处是数组对象里的id跟数组里另外一个对象里的parentId进行比较,
+        // 不同于排序时数组里单个值之间相互比较,
+        // 无法简单的用length-1这种不用和自己比较的操作
+        function listToTree1(list) {
+            for (var i = 0; i < list.length; i++) {
+                // console.log("外部")
+                for (var j = 0; j < list.length; j++) {
+                    // console.log("内部");
+                    // 自己的id不用跟自己的parentId比较
+                    if (i == j) continue;
+                    if (list[i].id == list[j].parentId) {
+                        if (!list[i].children) {
+                            list[i].children = [];
+                        }
+                        list[i].children.push(list[j]);
+                    }
+                }
+            }
+            return list.filter(item => !item.parentId);
+        }
+        let value1 = listToTree1(list)
+        console.log("双层for循环遍历:", value1);
+
+        function listToTree(list) {
+            let info = list.reduce((pre, item) => (pre[item.id] = item, item.children = [], pre), {})
+            return list.filter(item => {
+                info[item.parentId] && info[item.parentId].children.push(item)
+                return !item.parentId
+            })
+        }
+        let value2 = listToTree(list)
+        console.log("reduce遍历:", value2);
+
+    </script>
+</body>
+
+</html>

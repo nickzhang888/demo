@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<style>
+    .box {
+        height: var(--box-height);
+    }
+</style>
+
+<body>
+    <div id="style-variable">
+        <div class="box" :style="styleVar">
+            {{obj?.name}}
+        </div>
+        <button @click="handleClick">点击</button>
+        <p>age:<input type="text" v-model="age"></p>
+        <ol>
+            <li v-for="(item,index) in obj" :key="index">
+                {{ item }}
+            </li>
+        </ol>
+        <ul>
+            <li v-for="(item,index) in arr" :key="index">
+                {{ item }}
+            </li>
+        </ul>
+    </div>
+    <script>
+
+        var styleVariable = new Vue({
+            el: "#style-variable",
+            data() {
+                return {
+                    arr: ["白菜", "青菜"],
+                    age: 21,
+                    //v-for遍历对象里的值
+                    obj: {
+                        name: "nick"
+                    }
+                }
+            },
+            props: {
+                height: {
+                    type: Number,
+                    default: 54,
+                },
+            },
+            computed: {
+                styleVar() {
+                    return {
+                        '--box-height': this.height + 'px'
+                    }
+                }
+            },
+            watch: {
+                age: {
+                    handler(newValue, oldValue) {
+                        console.log('newValue:' + newValue + ',oldValue:' + oldValue)
+                    },
+                    immediate: true
+                }
+            },
+            created() {
+                console.log(this.height);
+            },
+            methods: {
+                handleClick() {
+                    // 这个页面不可以改变
+                    // this.arr[0] = "萝卜"
+                    // this.obj.hobby ="basketball"
+                    // 这个页面可以改变
+                    this.obj.name = "cheney"
+                    this.arr.splice(0, 1, "玉米")
+                },
+            },
+        });
+    </script>
+</body>
+
+</html>

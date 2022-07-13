@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+      .flip-list-move {
+        transition: transform 1s;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="flip-list" class="demo">
+      <ul class="filter-nav">
+        <li
+          v-for="(item, index) in filterNavItem"
+          class="filter-nav-item"
+          :class="{ active: index == filterNavItemActive }"
+          :data-target="item.target"
+          @click="returnIdAddress('#' + item.target, index)"
+        >
+          {{ item.name }}
+        </li>
+      </ul>
+      <button v-on:click="shuffle">Shuffle</button>
+      <transition-group name="flip-list" tag="ul">
+        <li v-for="item in items" :key="item">
+          {{ item }}
+        </li>
+      </transition-group>
+    </div>
+    <script>
+      var flipList = new Vue({
+        el: "#flip-list",
+        data: {
+          items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+          filterNavItem: [
+            { target: "team", name: "队员" },
+            { target: "alarm", name: "事件" },
+            { target: "car", name: "车辆" },
+            { target: "patrol", name: "巡更点" },
+          ],
+          filterNavItemActive: 0,
+        },
+        methods: {
+          shuffle: function () {
+            this.items.splice(2, 1);
+            this.items.splice(1, 0, 3);
+          },
+          returnIdAddress(id, index) {
+            document.querySelector(id).scrollIntoView({
+              behavior: "smooth",
+            });
+            this.filterNavItemActive = index;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

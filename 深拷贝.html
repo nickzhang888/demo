@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let arr = [
+            {
+                width: 100,
+                num: [1, 2]
+            },
+            {
+                width: 200,
+                num: [
+                    {
+                        key: 1,
+                        value: function () {
+                            console.log(111)
+                        }
+                    }
+                ]
+            }
+        ]
+        // let arr = "love520"
+        // let arr = null
+        function deepCopy(obj) {
+            let value;
+            // 判断是什么类型
+            if (typeof (obj) === 'object' && obj !== null) {
+                value = obj.constructor === Object ? {} : []
+                for (let key in obj) {
+                    //再判断内部是啥类型,层层递归
+                    if (typeof (obj[key]) === "object" && obj[key] !== null) {
+                        value[key] = deepCopy(obj[key])
+                    } else {
+                        value[key] = obj[key]
+                    }
+                }
+            } else {
+                value = obj
+            }
+            return value
+        }
+        let a = deepCopy(arr)
+
+        console.log(a);
+    </script>
+</body>
+
+</html>

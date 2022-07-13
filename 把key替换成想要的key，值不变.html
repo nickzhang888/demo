@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function changeKey(arr, key) {
+            let newArr = [];
+            arr.forEach((item, index) => {
+                let newObj = {};
+                key.forEach((k,i) => {
+                    newObj[k] = Object.values(item)[i]
+                })
+                newArr.push(newObj);
+            })
+            return newArr;
+        }
+        const data = [
+            {
+                name: "小张",
+                age: "18",
+                sex: "男",
+                mobile: "13776566666",
+                address: "南京"
+            },
+            {
+                name: "小王",
+                age: "20",
+                sex: "女",
+                mobile: "17776566666",
+                address: "北京"
+            }
+        ]
+        const titles = ['姓名', '年龄', '性别', "手机号码", "住址"]
+        let newArr = changeKey(data, titles)
+        console.log(newArr);
+    </script>
+</body>
+
+</html>

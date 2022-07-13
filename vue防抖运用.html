@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<style>
+    .blue {
+        color: skyblue;
+    }
+
+    .strong {
+        font-weight: 700;
+    }
+</style>
+
+<body>
+    <div id="watch-example">
+        <!-- trim会自动过滤用户输入的首尾空白字符 -->
+        <p>提问:<input v-model.trim="question" @keyup.enter="submit" @blur="handleChange" /></p>
+        <button @click.once="submit('只触发一次!')">提交</button>
+        <p :style="{color:isActive}">{{ answer }}</p>
+        <p :class="[isActive ? classObject :'' ]">测试class属性</p>
+        <p :style="styleObject">测试style属性</p>
+        <p :title="reverseAnswer">{{ reverseAnswer }}</p>
+        <ol>
+            <li v-for="(item,index) in todo" :key="item.id" v-if="isActive">
+                {{ item.text }}
+            </li>
+        </ol>
+        <label for="checkbox">{{ checked }}</label>
+        <input type="checkbox" v-model="checked" />
+        <p>v-html使用: <span v-html="rawHtml"></span></p>
+    </div>
+    <script>
+        function debounce(fn, delay) {
+            let timer;
+            return function () {
+                if (timer) {
+                    clearTimeout(timer)
+                }
+                timer = setTimeout(fn, delay)
+            }
+        }
+        // 子向父的介质是自定义事件，父向子的介质是props中的属性
+        // 子组件中定义父组件的值
+        // props: {
+        //         isContact: {
+        //         type: Boolean
+        //     },
+        //         condition: {
+        //         type: String
+        //     }
+        // }
+        // 子组件传给父组件相应的值
+        //  this.$emit("customer", res.data)
+        //  this.$emit("isContact", this.isContact)
+        // 父组件中引入子组件
+        // <Customer  @isContact="choiceContact(e)" @customer="getCutomer(e)"></Customer>
+        
+        var watchExampleVM = new Vue({
+            el: "#watch-example",
+            data() {
+                return {
+                    rawHtml: "<span style='color:red'>红彤彤</span>",
+                    question: "",
+                    answer: "",
+                    isActive: "",
+                    checked: false,
+                    classObject: {
+                        strong: true,
+                        blue: true,
+                    },
+                    styleObject: {
+                        "font-weight": 700,
+                        color: "blue",
+                    },
+                    list: [
+                        {
+                            id: 1,
+                            text: "学习 JavaScript",
+                        },
+                        {
+                            id: 2,
+                            text: "学习 Vue",
+                        },
+                        {
+                            id: 3,
+                            text: "整个牛项目",
+                        },
+                    ],
+                    index: 0,
+                    arr: []
+                };
+            },
+            watch: {
+                // 可以把data里的数据写成函数,监测该数据的变化
+                question(newValue, oldValue) {
+                    // this.answer = 'Waiting for you to stop typing...'
+                    this.getAnswer();  //1
+                    // this.debouncedGetAnswer()   //2
+                },
+            },
+            // 任何复杂逻辑，你都应当使用计算属性,reverseAnswer,todo相当于计算之后的值
+            computed: {
+                reverseAnswer(val, oldValue) {
+                    return this.answer.split("").reverse().join("");
+                },
+                todo() {
+                    return this.list.filter((item) => item.text.includes("学习"));
+                },
+            },
+            created() {
+
+                this.getData()
+
+                // `_.debounce` 是一个通过 Lodash 限制操作频率的函数。
+                // 在这个例子中，我们希望限制访问 yesno.wtf/api 的频率
+                // AJAX 请求直到用户输入完毕才会发出。想要了解更多关于
+                // `_.debounce` 函数 (及其近亲 `_.throttle`) 的知识，
+                // 请参考：https://lodash.com/docs#debounce
+                // this.debouncedGetAnswer = _.debounce(this.getAnswer, 500)  2
+            },
+            methods: {
+                getData(i) {
+                    if (this.index > this.list.length) return
+                    axios.get("https://yesno.wtf/api").then((response) => {
+                        this.answer = _.capitalize(response.data.answer);
+                        this.isActive = response.data.answer == "no" ? "red" : "";
+                        if (response.status == 200) {
+                            this.getData()
+                            this.index++
+                            this.arr.push(response.data.answer)
+                        }
+                        console.log(this.arr);
+
+                    }).catch((error) => {
+                        this.answer = "错误" + error;
+                    });
+                },
+                handleChange(e) {
+                    console.log(e.target.value);
+                },
+                // 1
+                getAnswer: debounce(function () {
+                    // if (this.question.indexOf('?') === -1) {
+                    //     this.answer = 'Questions usually contain a question mark. ;-)'
+                    //     return
+                    // }
+                    axios.get("https://yesno.wtf/api").then((response) => {
+                        this.answer = _.capitalize(response.data.answer);
+                        this.isActive = response.data.answer == "no" ? "red" : "";
+                        this.getAnswer()
+                    }).catch((error) => {
+                        this.answer = "错误" + error;
+                    });
+                }, 500),
+                submit(e) {
+                    alert(typeof e == "object" ? e.target.value : e);
+                },
+            },
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title></title>
+    <style type="text/css">
+      body,
+      ul,
+      li,
+      a,
+      p,
+      div {
+        padding: 0px;
+        margin: 0px;
+        font-size: 14px;
+      }
+      ul,
+      li {
+        list-style: none;
+      }
+      a {
+        text-decoration: none;
+        color: #333;
+      }
+      #demo {
+        overflow: hidden; /*溢出的部分不显示*/
+        width: auto;
+        height: 100px; /*一定要确切，避免demo1与demo2之间的距离过大*/
+      }
+      #express li {
+        list-style: none;
+        font-size: 14px;
+        height: 25px;
+        line-height: 180%; /*行与行之间的距离*/
+        letter-spacing: 2px; /*字与字之间的距离*/
+        cursor: pointer;
+      }
+      .n {
+        position: absolute;
+        height: 75px;
+        width: 100%;
+        background: #fff;
+        z-index: 9999;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="n"></div>
+    <div id="demo">
+      <div id="demo1">
+        <ul id="express">
+          <li>
+            <span>张先生报价成功</span><span>139xxxxx547</span>
+            <span>面积120㎡</span>
+          </li>
+          <li>
+            <span>王女士报价成功</span><span>152xxxxx452</span>
+            <span>面积96㎡</span>
+          </li>
+          <li>
+            <span>李先生报价成功</span><span>138xxxxx751</span>
+            <span>面积90㎡</span>
+          </li>
+          <li>
+            <span>刘先生报价成功</span><span>189xxxxx456</span>
+            <span>面积145㎡</span>
+          </li>
+        </ul>
+      </div>
+      <div id="demo2"></div>
+    </div>
+    <script type="text/javascript">
+      //获取id=demo,id=demo1,id=demo2的元素对象，并把id=demo1的内容赋值给id=demo2
+      var demo = document.getElementById("demo");
+      var demo1 = document.getElementById("demo1");
+      var demo2 = document.getElementById("demo2");
+      demo2.innerHTML = demo1.innerHTML;
+      //给demo1,demo2加相同的高度
+      // demo1.style.height = demo.offsetHeight + "px";
+      // demo2.style.height = demo.offsetHeight + "px";
+      //定时器，每隔50毫秒调用一次scrollup()函数，来实现文字的滚动
+      var timer = setInterval(scrollup, 80);
+      
+      //定义函数
+      function scrollup() {
+      //  offsetHeight包含div的高度,padding值以及border
+      // clientHeight包含div的高度和padding值
+        // 如果demo滚上去的高度大于demo的高度，重新给demo赋值从0再开始滑动
+        if (demo.scrollTop >= demo.offsetHeight) {
+          demo.scrollTop = 0;
+        } else {
+          demo.scrollTop++;
+        }
+      }
+
+      //鼠标放上停止滚动，鼠标离开继续滚动
+      demo.onmouseover = function() {
+        //清除定时器
+        clearInterval(timer);
+      };
+      demo.onmouseout = function() {
+        //添加定时器
+        timer = setInterval(scrollup, 80);
+      };
+    </script>
+  </body>
+</html>

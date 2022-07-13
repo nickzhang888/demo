@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function getCache() {
+            const cache = {}
+            return function (param) {
+                if (param in cache) {
+                    return "缓存中有:" + cache[param]
+                } else {
+                    let result = cache[param] = 20
+                    return "返回值:" + result
+                }
+            }
+        }
+        let res = getCache()
+        console.log(res("age"));
+        console.log(res("age"));
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+      .outer {
+        width: 400px;
+        height: 400px;
+        background: red;
+      }
+      .middle {
+        width: 200px;
+        height: 200px;
+        background: blue;
+      }
+      .inner {
+        width: 100px;
+        height: 100px;
+        background: yellow;
+      }
+      .other {
+        width: 200px;
+        height: 200px;
+        background: green;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- HTML -->
+<div id="app">
+  <div class="outer" @click.stop="outer">
+    <div class="middle" @click.stop="middle">
+      <div class="inner" @click.stop="inner"></div>
+    </div>
+    <!-- <div class="other" @click="other"></div> -->
+  </div>
+  <input type="text" @keydown.f1="prompt()" />
+</div>
+<script>
+Vue.config.keyCodes = {
+  f1: 112,
+};
+let app = new Vue({
+  el: "#app",
+  data() {
+    return {};
+  },
+  methods: {
+    inner: function () {
+      console.log("inner：这是最里面盒子");
+    },
+    middle: function () {
+      console.log("middle: 这是中间的盒子");
+    },
+    outer: function () {
+      console.log("outer: 这是外面的盒子");
+    },
+    other: function () {
+      console.log("other: 这是旁边的盒子");
+    },
+    prompt: function () {
+      alert("我是 F1");
+    },
+  },
+});
+</script>
+  </body>
+</html>

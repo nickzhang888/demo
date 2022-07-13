@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* .wrap::placeholder{
+            color:brown
+        } */
+        .wrap::selection {
+            color: blue
+        }
+    </style>
+    <div>
+        <!-- <input class="wrap" type="text" placeholder="你好" /> -->
+
+    </div>
+</head>
+
+<body>
+    <script>
+        const p = {
+            name: "xx",
+            age: 18
+        }
+
+        function foo(p1, p2 = p) {
+            if (p1 === p2) {
+                console.log("一样的");
+            } else {
+                console.log("不一样");
+            }
+        }
+        foo(p)
+        let b = Promise.reject("a")
+        b.then((good) => {
+            console.log(good, 111);
+        }).catch((bad, ...rest) => {
+            console.log(bad, 222);
+        })
+
+        let arrow = (...args) => {
+            // console.log('入参列表 : ', arguments); //外层的入参列表
+            console.log('剩余参数 : ', args); //使用剩余参数表示法获得的自身入参列表
+        }
+        arrow(1, 2)
+
+        let url = "?"
+        for (const key in p) {
+            url += key + "=" + p[key] + '&'
+        }
+        url = url.slice(0, -1);
+        console.log(url);
+
+    </script>
+</body>
+
+</html>

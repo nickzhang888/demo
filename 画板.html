@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.8/vue.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+      .box {
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .tool {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #canvas {
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="box" id="root">
+      <div class="tool">
+        <el-button @click="changeType('huabi')" type="primary">画笔</el-button>
+        <el-button @click="changeType('rect')" type="success">正方形</el-button>
+        <el-button
+          @click="changeType('arc')"
+          type="warning"
+          style="margin-right: 10px"
+        >
+          圆形
+        </el-button>
+        <div>颜色：</div>
+        <el-color-picker v-model="color"></el-color-picker>
+        <el-button @click="clear">清空</el-button>
+        <el-button @click="saveImg">保存</el-button>
+      </div>
+      <canvas
+        id="canvas"
+        width="1000"
+        height="500"
+        @mousedown="canvasDown"
+        @mousemove="canvasMove"
+        @mouseout="canvasUp"
+        @mouseup="canvasUp"
+      >
+      </canvas>
+    </div>
+    <script>
+      const app = new Vue({
+        el: "#root",
+        data() {
+          return {
+            type: "huabi",
+            isDraw: false,
+            canvasDom: null,
+            ctx: null,
+            beginX: 0,
+            beginY: 0,
+            color: "#ff8b14",
+            imageData: null,
+            shadowBlur: 1,
+            lineShadowColor: "#000",
+            lineWidth: 3,
+          };
+        },
+        mounted() {
+          this.$nextTick((params) => {
+            this.canvasDom = document.getElementById("canvas");
+            this.ctx = this.canvasDom.getContext("2d");
+           
+          });
+        },
+        methods: {
+          changeType(type) {
+            this.type = type;
+          },
+          canvasDown(e) {
+            this.isDraw = true;
+            const canvas = this.canvasDom;
+            this.beginX = e.pageX - canvas.offsetLeft;
+            this.beginY = e.pageY - canvas.offsetTop;
+
+            this.ctx.strokeStyle = this.color;
+            this.ctx.lineWidth = this.lineWidth;
+            this.ctx.lineCap = 'round';  //线条末端添加圆形线帽，减少线条的生硬感
+            this.ctx.lineJoin = 'round';  //线条交汇时为原型边角
+            //直线画笔
+            this.ctx.beginPath();
+            this.ctx.moveTo(this.beginX, this.beginY)
+          },
+          canvasMove(e) {
+            if (!this.isDraw) return;
+            const canvas = this.canvasDom;
+            const ctx = this.ctx;
+            const x = e.pageX - canvas.offsetLeft;
+            const y = e.pageY - canvas.offsetTop;
+            this[`${this.type}Fn`](ctx, x, y, e);
+          },
+          canvasUp(e) {
+            this.ctx.closePath();
+            // 直线画笔
+            this.imageData = this.ctx.getImageData(0, 0, 1000, 500);
+            this.isDraw = false;
+          },
+          huabiFn(ctx, x, y, e) {
+            // 直线画笔
+            this.ctx.lineTo(x,y)
+            this.ctx.stroke()
+
+
+            // 圆形画笔
+            // ctx.beginPath();
+            // ctx.arc(x, y, 5, 0, 2 * Math.PI);
+            // ctx.fillStyle = this.color;
+            // ctx.fill();
+            // ctx.closePath();
+          },
+
+          rectFn(ctx, x, y) {
+            const beginX = this.beginX;
+            const beginY = this.beginY;
+            ctx.clearRect(0, 0, 1000, 500);
+            this.imageData &&
+              ctx.putImageData(this.imageData, 0, 0, 0, 0, 1000, 500);
+            ctx.beginPath();
+            ctx.strokeStyle = this.color;
+            ctx.rect(beginX, beginY, x - beginX, y - beginY);
+            ctx.stroke();
+            ctx.closePath();
+          },
+          arcFn(ctx, x, y) {
+            const beginX = this.beginX;
+            const beginY = this.beginY;
+            this.isDraw && ctx.clearRect(0, 0, 1000, 500);
+            this.imageData &&
+              ctx.putImageData(this.imageData, 0, 0, 0, 0, 1000, 500);
+            ctx.beginPath();
+            ctx.strokeStyle = this.color;
+            // ctx.arc(beginX, beginY, 100, 0, 2 * Math.PI);
+            ctx.arc(
+              beginX,
+              beginY,
+              Math.round(
+                Math.sqrt(
+                  (x - beginX) * (x - beginX) + (y - beginY) * (y - beginY)
+                )
+              ),
+              0,
+              2 * Math.PI
+            );
+            ctx.stroke();
+            ctx.closePath();
+          },
+          saveImg() {
+            const url = this.canvasDom.toDataURL();
+            const a = document.createElement("a");
+            a.download = "sunshine";
+            a.href = url;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          },
+          clear() {
+            this.imageData = null;
+            this.ctx.clearRect(0, 0, 1000, 500);
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

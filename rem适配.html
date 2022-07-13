@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html >
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title></title>
+    <script>
+        // em是参数当前元素的字体大小,如果没有就参照父元素,如果再没有就一直往上找,直到根元素
+        // rem是参照根元素的
+        // 1rem =100px
+        window.onresize = function(){
+            var html = document.getElementsByTagName('html')[0];
+            /*取到屏幕的宽度*/
+            var width = window.innerWidth;
+            /* 以375标准屏幕为例 */
+            var fontSize = 100* (width/375);
+            /*设置fontsize*/
+            html.style.fontSize = fontSize +'px';
+        }
+    </script>
+    <style>
+        body,html{
+            margin: 0;
+            padding : 0;
+            font-size: 100px;
+        }
+        div{
+            width: 2rem;
+            height: 2rem;
+            background: red;
+            color: #fff;
+            font-size: 0.16rem;
+        }
+    </style>
+</head>
+<body>
+    <div>AAA</div>
+</body>
+</html>

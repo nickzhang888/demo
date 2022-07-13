@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // function test(delay) {
+    //   let start = new Date().getTime();
+    //   while (new Date().getTime() - start < delay) {
+    //     console.log("睡觉");
+    //     continue;
+    //   }
+    // }
+    // // 假死循环
+    // function sleep(v) {
+    //   console.log("开始");
+    //   test(v);
+    //   console.log("结束");
+    // }
+    // sleep(1000);
+
+    //深浅拷贝
+    let arr = [{ width: 100 }];
+    let obj = { key: { value: 1 } }
+    
+    let deep = JSON.parse(JSON.stringify(arr));
+    //下面几个实现一维数组的深拷贝,一维对象的深拷贝,总的来说他们实现的是浅拷贝
+    let concat = arr.concat();
+    let slice = arr.slice();
+    let map = arr.map(node=>({...node}));
+    let extend = [...arr];
+    let from = Array.from(arr);
+    //Object.assign拷贝可枚举的对象,
+    let assign = Object.assign([], arr);
+    let assignObj = Object.assign({}, obj); 
+    arr[0].width = 200;
+    obj.key.value = 2; 
+    console.log("deep:", deep);     //[{ width: 100 }];
+    console.log("concat:", concat); //[{ width: 200 }];
+    console.log("slice:", slice);   //[{ width: 200 }];
+    console.log("extend:", extend); //[{ width: 200 }];
+    console.log("from:", from);     //[{ width: 200 }];
+    console.log("assign:", assign); //[{ width: 200 }];
+    console.log("assignObj:", assignObj); // { key: { value: 2 } }
+
+    
+  </script>
+</body>
+
+</html>

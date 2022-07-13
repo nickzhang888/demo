@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let array = [8, 20, 12, 14, 31, 25,6]
+        let quickSort = (arr)=>{
+            // debugger
+            // 如果数组只有一项,就直接返回数组
+            if(arr.length <= 1) return arr
+            // 把此数组的中间值取出来
+            let mIndex = parseInt(arr.length / 2)
+            let mValue = arr.splice(mIndex, 1)[0]
+            // 让原数组里的每一项与中间值做比较,比他小的放左边,比他大的放右边
+            let leftArr = [], rightArr = [];
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] < mValue) {
+                    leftArr.push(arr[i])
+                } else {
+                    rightArr.push(arr[i])
+                }
+            };
+            // 左右两边继续取中间值,与中间值做比较(递归实现)
+            return quickSort(leftArr).concat(mValue, quickSort(rightArr))
+        }              
+        console.log(quickSort(array));
+        
+    </script>
+</body>
+
+</html>

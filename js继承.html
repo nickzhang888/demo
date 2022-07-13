@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 首先，我们将 Person 类中需要复用的方法提取到 Person.prototype 中，
+        // 然后设置 Child 的原型对象为 Person 类的一个实例，
+        // 这样 child1 就能访问到 Person 原型对象上的属性和方法了。
+        // 其次，为保证 child1 和 child2 拥有各自的父类属性副本，
+        // 我们在 Child 构造函数中，还是使用了 Person.call ( this ) 方法。
+        // 如此，结合原型链继承和借用构造函数继承，就完美地解决了之前这二者各自表现出来的缺点。
+        function Person(name, age, gender) {
+            // 当Student调用Person时,this指向调用者s1
+            this.name = name;
+            this.age = age;
+            this.gender = gender;
+            this.emotion = ['喜', '怒', '哀', '乐']; //人都有喜怒哀乐
+        }
+        // 静态方法,类可以访问,实例无法访问
+        Person.hobby = function () {
+            return "play football"
+        }
+        let p1 = new Person("xx", 18, "man")
+        console.log(p1, Person.hobby());
+        Person.prototype.sayHi = function () {
+            console.log("您好啊！");
+        };
+
+        function Child(name, age, gender, score) {
+            Person.call(this, name, age, gender)
+            // Person.apply(this, ["小明", "18", "女"]) //=> apply后面的参数是个数组.
+            this.score = score;
+        }
+        Child.hobby = Person.hobby
+        console.log(Child.hobby());
+        //此时 Child.prototype 中的 constructor 被重写了，会导致 child.constructor === Person
+        // 将 Child 原型对象的 constructor 指针重新指向 Child 本身
+        //为了Child的实例成员能访问到 Person 原型对象上的属性和方法,设置 Child 的原型对象为 Person 类的一个实例
+        Child.prototype = new Person()
+        Child.prototype.constructor = Child
+        let child1 = new Child("小明", "18", "女", 80)
+        child1.emotion.push('愁');
+        console.log(child1); //["喜", "怒", "哀", "乐", "愁"]
+
+        var child2 = new Child("小张", "18", "男", 100);
+        console.log(child2); //["喜", "怒", "哀", "乐"]
+        child2.sayHi()
+        // console.log(child.__proto__.constructor === Child);
+    </script>
+</body>
+
+</html>

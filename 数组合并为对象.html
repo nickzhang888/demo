@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // let n = 3
+        // let arr = new Array(n).fill({
+        //     value: "3个值"
+        // })
+        // console.log(arr);
+        let arr = [{ a: 1, b: 10 }, { a: 2, b: 20 }, { a: 3, b: 30 }]
+        let obj = {}
+        // 1.双层forEach
+        arr.forEach((item, index) => {
+            Object.keys(item).forEach(each => {
+                obj[`${each}${index + 1}`] = item[each]
+            })
+        })
+        console.log(obj)
+        // 2.使用reduce方法
+        let a = arr.reduce((pre, cur, index) => {
+            Object.keys(cur).forEach((item) => {
+                pre[`${item}${index + 1}`] = cur[item]
+            })
+            return pre
+        }, {})
+        console.log(a); 
+    </script>
+</body>
+
+</html>

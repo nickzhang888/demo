@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- slot翻译为插槽,子组件中有一部分内容可以根据父组件传过来的dom进行显示，用<slot></slot> 表示，进行占坑.
+    父组件可以在这个占位符中填充内容，进行填坑。 -->
+    <!-- 子组件 -->
+    <template>
+        <div>
+            <h1>今天的节日是：</h1>
+            <slot></slot>
+        </div>
+    </template>
+    <script>
+        export default {
+            name: 'child'
+        }
+    </script>
+    <!-- 父组件 -->
+    <template>
+        <div>
+            <child>
+                <div>3.8女神节,你最美!</div>
+            </child>
+        </div>
+    </template>
+    <script>
+        import child from "./child.vue";
+        export default {
+            name: 'father',
+            components: {
+                child
+            }
+        }
+    </script>
+
+
+    1.具名插槽
+    子组件向父组件传值，slot上面通过name属性指定槽口名称，然后使用的时候通过slot="槽口名称"。
+
+    <!-- 父组件 -->
+    <div id="app">
+        <aaa>
+            <!-- <h3>slot槽口插入的内容</h3> -->
+            <p slot="s1">在上面的内容</p>
+            <p slot="s2">在下面的内容</p>
+        </aaa>
+    </div>
+    <!-- 子组件 -->
+    <template id="aaa">
+        <div class="aaa">
+            <slot name="s1"></slot>
+            <p>我是aaa组件</p>
+            <slot name="s2"></slot>
+        </div>
+    </template>
+
+
+    2.作用域插槽
+    <!-- 子组件 -->
+    <ul>
+        <slot name="item" v-for="item in items" :text="item.text" :myname="item.myname">
+            slot的默认内容
+        </slot>
+    </ul>
+    <!-- 父组件 -->
+    <Child>
+        <template slot="item" slot-scope="props">
+            <li>{{props.myname}}</li>
+        </template>
+    </Child>
+    插槽显不显示、怎样显示是由父组件来控制的，而插槽在哪里显示就由子组件来进行控制
+    <template>
+      <div>
+        <Child>
+           <div slot="jumpIcon">跳起来</div>
+        </Child>
+      </div>
+    </template>
+</body>
+
+</html>

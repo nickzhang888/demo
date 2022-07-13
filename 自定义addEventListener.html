@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>TEST</title>
+    <style>
+    .send{
+        margin: 10px 0;
+        height: 50px;
+        background: #6a61ff;
+        color: #fff;
+        line-height: 50px;
+        text-align: center;
+    }
+     </style>
+</head>
+<body>
+<div class="send" onclick="handleSend('1')">点击触发自定义事件，传递参数1</div>
+<div class="send" onclick="handleSend('2')">点击触发自定义事件，传递参数2</div>
+<div>
+    <p>接收自定义事件数据</p>
+    <p id="receive"></p>
+</div>
+
+
+<script>
+    var event = document.createEvent('HTMLEvents');
+    // 初始化testEvent事件
+    event.initEvent('testEvent', false, true);
+
+    function handleSend(data){
+        event.data = {
+            data
+        };
+        // 触发自定义事件
+        window.dispatchEvent(event);
+    }
+
+    window.addEventListener('testEvent', function(obj){
+        console.log('receive',obj.data);
+        document.getElementById('receive').innerHTML = JSON.stringify(obj.data)
+
+    });
+
+</script>
+</body>
+</html>
+
+

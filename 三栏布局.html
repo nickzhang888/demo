@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+        }
+
+        .main {
+            flex: 1;
+            background: green;
+            margin:0 100px;
+           
+        }
+
+        .left {
+            width: 200px;
+            height: 300px;
+            background: red;
+        }
+
+        .right {
+            width: 200px;
+            height: 300px;
+            background: blue;
+        }
+    </style>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<body>
+    <!-- <div id="app-2">
+        <span :title="message">
+            鼠标悬停几秒钟查看此处动态绑定的提示信息！
+        </span>
+        <h2>框架功能列表</h2>
+    </div>
+    <span title="我这个属性只要鼠标停留在上面就会显示出来">文字文字文字</span> -->
+    <div class="container">
+        <div class="left"></div>
+        <div class="main"></div>
+        <div class="right"></div>
+    </div>
+</body>
+
+</html>

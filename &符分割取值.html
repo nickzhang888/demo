@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let str = "www.baidu.com?age=18&name=zs"
+        let query = str.split("?")[1]
+        let queryArr = query.split("&")
+        let obj = {}
+        queryArr.forEach(item => {
+            let key = item.split("=")[0]
+            let value = item.split("=")[1]
+            obj[key] = value
+        })
+        console.log(obj);
+
+        let object = [
+            {
+                width: 10,
+                name: "test"
+            },
+            {
+                width: 100,
+                name: "demo"
+            }
+        ]
+        let arr = []
+        object.forEach(item => {
+            arr.push({
+                value: item.name
+            })
+        })
+        let a = object.map(obj => obj.name)
+        console.log(a);
+    </script>
+</body>
+
+</html>

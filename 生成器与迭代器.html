@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // let arr = [1,2,3]      
+        // let it = arr[Symbol.iterator]() // 获取数组中的迭代器
+        // console.log(it.next())  // { value: 1, done: false }
+        // console.log(it.next())  // { value: 2, done: false }
+        // console.log(it.next())  // { value: 3, done: false }
+        // console.log(it.next())  // { value: undefined, done: true }
+
+
+        function* foo(x) {
+            let y = 2 * (yield (x + 1))
+            let z = yield (y / 3)
+            return (x + y + z)
+        }
+        let it = foo(5)
+        console.log(it.next())   // => {value: 6, done: false}
+        console.log(it.next(6)) // => {value: 8, done: false}
+        console.log(it.next(13)) // => {value: 42, done: true}
+
+        function* createIterator() {
+            yield 1;
+            yield 2;
+            yield 3;
+        }
+        // 生成器能像正规函数那样被调用，但会返回一个迭代器
+        let iterator = createIterator();
+        console.log(iterator.next()); //  {value: 1, done: false}
+        console.log(iterator.next()); //  {value: 2, done: false}
+        console.log(iterator.next()); //  {value: 3, done: true}
+
+    </script>
+
+</body>
+
+</html>

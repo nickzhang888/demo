@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style></style>
+</head>
+
+<body>
+    <div>
+
+    </div>
+    <script>
+
+        function getAge(...args) {
+            console.log(args, arguments)   //[12,88]   伪数组[12,88]
+        }
+        getAge(12, 88)
+
+        function getInfo(member, year) {
+            member.name = "Lydia";
+            year = "1998";
+        }
+        const person = { name: "Sarah" };
+        const birthYear = "1997";
+        getInfo(person, birthYear);
+        console.log(person, birthYear);  //{name:'Lydia'}   1997
+
+        /*1.全局属性可以删除
+        2.通过let,var,const或者function声明的属性不能删除
+        4.原型上的属性不能被删除*/
+        const name = 'Lydia'
+        age = 21
+        const a = delete name
+        const b = delete age
+        console.log(a, b);    //false true
+
+        const settings = {
+            username: "lydiahallie",
+            level: 19,
+            health: 90
+        };
+        // 第二个参数是个数组,表示第一个参数中要序列化的属性名
+        const data = JSON.stringify(settings, ["level", "health"]);
+        console.log(data);    //{"level":19,"health":90}
+
+
+        let text = `很多关于解决饼图文字描述过长导致重叠的问题，找了 很多一直没有一个合适的解决方案，最后自己只能花时间研究echarts文档，功夫不负有心人，终于解决了文字重叠展示不全等问题`
+        text = [1, 2, 3, 4]
+        function wrapText(text) {
+            var str = ""
+            for (var i = 0, s; s = text[i++];) {
+                str += s;
+                if (!(i % 10)) str += '\n';
+            }
+            // for(let i = 0, len = text.length; i < len; i++) {
+            // for (let i = 0; i < text.length; i++) {
+            //     if (i != 0) {
+            //         str += text[i]
+            //     }
+            //     if (!(i % 10) && i != 0) str += '\n'
+            // }
+            return str
+        }
+
+        let res = wrapText(text)
+        console.log(res);
+
+
+    </script>
+</body>
+
+</html>

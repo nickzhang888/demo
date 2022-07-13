@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    .box {
+      width: 312px;
+      margin: 0 auto;
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .box li {
+      float: left;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      margin-right: -2px;
+      margin-bottom: -2px;
+      list-style: none;
+      text-align: center;
+      border: 2px solid red;
+      /* background: red; */
+      /* border-radius: 8px; */
+    }
+
+    .box li:nth-of-type(3n) {
+      /* 选择个数是3的倍数的元素 */
+      margin-right: 0;
+    }
+
+    .box li:nth-of-type(n+7) {
+      /* 选择倒数的三个元素，n可以取0 */
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <ul>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+      <li>6</li>
+      <li>7</li>
+      <li>8</li>
+      <li>9</li>
+    </ul>
+  </div>
+</body>
+
+</html>

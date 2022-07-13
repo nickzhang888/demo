@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <canvas id="canvas"></canvas>
+</head>
+
+<body>
+
+    <script type="text/javascript">
+        window.requestAnimFrame = (function () {
+            return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                function (callback) {
+                    window.setTimeout(callback, 1000 / 60);
+                };
+        })();
+        var canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let speed = 0.1
+        let xOffset = 0
+        // 水位数值
+        let rangeValue = 0.7;
+        // 初始水位
+        let nowRange = 0
+        let isDrawCircle;
+        let canvasWidth = canvas.width = 500
+        let canvasHeight = canvas.height = 500
+        // 单纯用setInterval做出来的有顿挫感,没有requestAnimationFrame平滑
+        // setInterval(drawImg,50)
+        drawImg()
+        function drawSin() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const points = [];
+            const startX = 0;
+            const waveWidth = 0.05; // 波浪宽度,数越小越宽
+            const waveHeight = 5; // 波浪高度,数越大越高
+            ctx.beginPath();
+            // y = 波浪高度 * sin(x * 波浪宽度 + 水平位移)
+            for (let x = startX; x < startX + canvasWidth; x += 20 / canvasWidth) {
+                const y = waveHeight * Math.sin((startX + x) * waveWidth + xOffset);
+                points.push([x, (1 - nowRange) * canvasHeight + y]);
+                ctx.lineTo(x, (1 - nowRange) * canvasHeight + y);
+            }
+            ctx.lineTo(canvasWidth, canvasHeight);
+            ctx.lineTo(startX, canvasHeight);
+            ctx.lineTo(points[0][0], points[0][1]);
+            const radius = canvasWidth / 2;
+            const grd = ctx.createLinearGradient(radius, radius, radius, canvasHeight);
+            grd.addColorStop(0, '#F39C6B');
+            grd.addColorStop(1, '#A0563B');
+            //添加颜色
+            ctx.fillStyle = grd;
+            ctx.fill();
+            ctx.stroke();
+
+        }
+
+        function drawImg() {
+            if (!isDrawCircle) {
+                drawCircle()
+            }
+            if (nowRange < rangeValue) {
+                nowRange += 0.01;
+            }
+
+            drawSin();
+            // 水平位移
+            xOffset += speed;
+            // 递归执行
+            requestAnimFrame(drawImg);
+        }
+        function drawCircle() {
+            const r = canvas.width / 2;
+            const lineWidth = 5;
+            const cR = r - (lineWidth);
+            // 线条加粗
+            ctx.lineWidth = lineWidth;
+            ctx.beginPath();
+            ctx.arc(r, r, cR, 0, 2 * Math.PI);
+            ctx.strokeStyle = 'rgba(186, 165, 130, 0.3)';
+            ctx.stroke();
+            // 定义了剪切区域后，浏览器会将所有的绘图操作都限制在本区域内执行
+            ctx.clip();
+            isDrawCircle = true
+        }
+
+
+    </script>
+</body>
+
+</html>

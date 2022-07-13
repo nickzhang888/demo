@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* *{
+            padding:0;
+            margin:0
+        } */
+        #box {
+            width: 500px;
+            height: 500px;
+            background: red
+        }
+
+        #item1 {
+            width: 100px;
+            height: 100px;
+            background: blue
+        }
+        #item2 {
+            margin:50px;
+            width: 100px;
+            height: 100px;
+            background: green
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <div id="item1"></div>
+        <div id="item2"></div>
+    </div>
+    <script>
+        box.onclick = function () {
+            console.log("大盒子");
+        }
+        item1.onclick = function (e) {
+            e.stopPropagation()
+            console.log("小弟1",e);
+        }
+        item2.onclick = function (e) {
+            e.stopPropagation()
+            console.log("小弟2");
+        }
+       
+    </script>
+</body>
+
+</html>

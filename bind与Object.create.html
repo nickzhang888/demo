@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // this.x = 9; // 在浏览器中，this 指向全局的 "window" 对象
+      // var module = {
+      //   x: 81,
+      //   getX: function () {
+      //     return this.x;
+      //   },
+      // };
+      // module.getX(); // 81
+      // var retrieveX = module.getX;
+      // retrieveX();
+      // // 返回 9 - 因为函数是在全局作用域中调用的
+      // // 创建一个新函数，把 'this' 绑定到 module 对象
+      // // 新手可能会将全局变量 x 与 module 的属性 x 混淆
+      // var boundGetX = retrieveX.bind(module);
+      // boundGetX(); // 81
+
+      // const person = {
+      //   isHuman: false,
+      //   printIntroduction: function () {
+      //     console.log(`My name is ${this.name}. Am I human? ${this.isHuman}`);
+      //   },
+      // };
+      // //创建一个新的对象,让属性和方法继承到对象的__proto__上
+      // const me = Object.create(person);
+      // me.name = "Matthew"; // "name" is a property set on "me", but not on "person"
+      // me.isHuman = true; // inherited properties can be overwritten
+      // me.printIntroduction();
+      // console.log(me);
+
+      // Shape - 父类(superclass)
+      function Shape() {
+        this.x = 0;
+        this.y = 0;
+      }
+      // 父类的方法
+      Shape.prototype.move = function (x, y) {
+        this.x += x;   //window.x= window.x + x
+        this.y += y;
+        console.log(this.x);
+      };
+
+      // // Rectangle - 子类(subclass)
+      function Rectangle() {
+        console.log(this); // 构造函数中的this指向创建的实例成员
+        Shape.call(this); 
+      }
+      Rectangle()
+      // // 子类续承父类
+      Rectangle.prototype = Object.create(Shape.prototype);
+      Rectangle.prototype.constructor = Rectangle;
+
+      var rect = new Rectangle();
+
+      console.log(rect instanceof Rectangle); // true
+      console.log(rect instanceof Shape); // true
+      rect.move(11, 1); // Outputs, 'Shape moved.'
+    </script>
+  </body>
+</html>

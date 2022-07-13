@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //1.ES5构造函数
+        // function Person(name) {
+        //     this.name = name;
+        //     this.sleep = function () {
+        //         console.log(this.name + '正在睡觉')
+        //     }
+        // }
+        // Person.prototype.sayHi = function () {
+        //     console.log("您好啊！");
+        // };
+        // Person.prototype.change = "123木头人"
+        // function Child(name,age) {
+        //     Person.call(this,name)
+        //     this.age = age
+        // }
+        // Child.prototype = Object.create(Person.prototype)
+        // // Child.prototype.constructor = Child
+        // let child = new Child("校长",10)
+        // console.dir(child)
+
+
+        //class 相当于es5中构造函数
+        //class中定义方法时，前后不能加function，全部定义在class的protopyte属性中
+        //class中定义的所有方法是不可枚举的
+        //class中只能定义方法，不能定义对象，变量等
+        //class和方法内默认都是严格模式
+        //es5中constructor为隐式属性
+        
+        // 2.ES6 class
+        /*子类可以继承父类的静态属性和静态方法,而实例不可以,父类的公共属性和公共方法是可以
+        给父类的实例以及子类的实例使用的*/
+        class People {
+            // 加上static关键字，就表示该方法不会被实例继承,只能子类继承
+            static peopleMethod(){
+                console.log("hello people!")
+            }
+            static peopleProperty = "吃吃喝喝"
+            /*constructor()方法是类的默认方法，通过new命令生成对象实例时，自动调用该方法。
+            一个类必须有constructor()方法，如果没有显式定义，一个空的constructor()方法会被默认添加。*/
+            // Object.create(null) 会创建一个空的对象,并且没有任何的属性
+            constructor(name, age) {
+                this.name = name;
+                this.age = age;
+            }
+            sleep() {
+                console.log(`${this.name} ${this.age} 正在睡觉`)
+            }
+        }
+        let p1 = new People("小李",25)
+        // 因为Person.prototype = new People()
+        // class中的属性和方法是不可以枚举的,而es5中是可以枚举的
+        console.log(p1.constructor === People.prototype.constructor);  //==> []
+        p1 === People.prototype
+       
+        console.log(People.prototype)
+        //继承父类
+        class Child extends People {
+            static childMethod(){
+                // 子类继承父类的静态方法,但不能修改
+                super.peopleMethod()
+            }
+            static childProperty = super.peopleProperty
+            constructor(name, age) {
+                //继承父类属性
+                super(name, age);
+            }
+            sleep() {
+                //继承父类方法
+                super.sleep()
+            }
+            hobby(){
+                console.log("study")
+            }
+        }
+        Child.prototype.hobby = function(params){
+            console.log("study")
+        }
+        let child = new Child('小红', 18);
+        // delete Child.prototype.hobby
+        child.hobby()
+        child.sleep();    //小红 18 正在睡觉
+        Child.peopleMethod()  //hello people!
+         
+    </script>
+</body>
+
+</html>

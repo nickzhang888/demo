@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>微信摇一摇</title>
+</head>
+
+<body>
+    <!--请摇一摇-->
+</body>
+<script type="text/javascript">
+    // 1.不带边框的简陋表格
+    for (var i = 1; i <= 9; i++) {
+        for (var j = 1; j <= i; j++) {
+            document.write(`${i}*${j} = ${i * j} `)
+        }
+        document.write('<br/>')
+    };
+
+    // 2.带边框的正立表格
+    var sheet = "<table border='1'>" 
+    for (var i = 1; i <= 9; i++) {
+        sheet += "<tr>"
+        for (var j = 1; j <= i; j++) {
+            sheet += (`<td>${i}*${j} = ${i * j}</td>`)
+        }
+        sheet += "</tr>"
+    };
+    sheet += "</table>"
+    document.write(sheet)
+
+    // 3.带边框的倒立表格
+    var form = "<table border='1'>" 
+    for (var i = 1; i <= 9; i++) {
+        form += "<tr>"
+        for (var j = i; j <= 9; j++) {
+            form += (`<td>${i}*${j} = ${i * j}</td>`)
+        }
+        form += "</tr>"
+    };
+    form += "</table>"
+    document.write(form)
+
+</script>
+
+</html>

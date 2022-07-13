@@ -1,0 +1,60 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        img {
+            display: block;
+            /* margin-bottom: 100px; */
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="./loading.gif" data="./imgs/1.png" alt="">
+    <img src="./loading.gif" data="./imgs/2.png" alt="">
+    <img src="./loading.gif" data="./imgs/3.png" alt="">
+    <img src="./loading.gif" data="./imgs/4.png" alt="">
+    <img src="./loading.gif" data="./imgs/5.png" alt="">
+    <img src="./loading.gif" data="./imgs/6.png" alt="">
+    <img src="./loading.gif" data="./imgs/7.png" alt="">
+    <img src="./loading.gif" data="./imgs/8.png" alt="">
+    <img src="./loading.gif" data="./imgs/9.png" alt="">
+    <!-- 纯js -->
+    <script>
+        let imgs = document.querySelectorAll('img')
+        let n = 0//避免滚动时每次都从0开始
+        function lazyLoad() {
+            let clientHeight = window.innerHeight
+            // 实时获取可滚动的距离
+            let scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+            for (let i = n; i < imgs.length; i++) {
+                // 能看到的图片直接加载出来
+                if (imgs[i].offsetTop <= clientHeight) {
+                    if (imgs[i].getAttribute('src') == './loading.gif') {
+                        imgs[i].src = imgs[i].getAttribute('data')
+                    }
+                    n = i + 1
+                    continue
+                }
+                //如果图片滚动的距离+浏览器高度>=图片距离顶部的距离
+                if (scrollTop + clientHeight >= imgs[i].offsetTop) {
+                    console.log(i);
+                    setTimeout(() => {
+                        //只有为xx图片的地方才进行图片替换
+                        if (imgs[i].getAttribute('src') == './loading.gif') {
+                            imgs[i].src = imgs[i].getAttribute('data')
+                        }
+                    }, 1000)
+                    n = i + 1
+                }
+            };
+        }
+        // 先初始化执行下
+        lazyLoad()
+        //再滚动式调用
+        window.onscroll = lazyLoad
+    </script>
+
+</body>

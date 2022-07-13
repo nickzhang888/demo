@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        Function.prototype.myCall = function (thisArg, ...args) {
+            console.log(...args);
+            // 判断调用者是否为函数
+            if (typeof this !== "function") {
+                throw new Error("Error");
+            }
+            const fn = Symbol('fn')  // 声明一个独有的Symbol属性, 防止fn覆盖已有属性
+            thisArg = thisArg || window    // 若没有传入this, 默认绑定window对象
+            thisArg[fn] = this    // this指向调用call的对象,即我们要改变this指向的函数
+            const result = thisArg[fn](...args)  // 执行当前函数
+            delete thisArg[fn]              // 删除我们声明的fn属性
+            return result                  // 返回函数执行结果
+        }
+        //测试
+        const obj = { name: '自定义的名称' }
+        function foo() {
+            const name = "函数内的名称"
+            console.log(this.name)
+            console.log(arguments)
+        }
+        foo.myCall(obj,'其他参数')
+
+        Function.prototype.myApply = function (thisArg,args) {
+            // 判断调用者是否为函数
+            if (typeof this !== "function") {
+                throw new Error("Error");
+            }
+            const fn = Symbol('fn')  // 声明一个独有的Symbol属性, 防止fn覆盖已有属性
+            thisArg = thisArg || window    // 若没有传入this, 默认绑定window对象
+            thisArg[fn] = this    // this指向调用call的对象,即我们要改变this指向的函数
+            const result = thisArg[fn]([...args])  // 执行当前函数
+            delete thisArg[fn]              // 删除我们声明的fn属性
+            return result                  // 返回函数执行结果
+        }
+        // foo.myApply(obj,['其他参数'])
+
+    </script>
+</body>
+
+</html>

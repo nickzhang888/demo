@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+        }
+
+        #wrap {
+            width: 380px;
+            /* height:40px;
+            line-height: 40px; */
+            /* margin: 20px auto; */
+            border: 2px solid green;
+            white-space: nowrap;
+            overflow: hidden;
+            padding: 10px;
+            color: rgb(110, 244, 216);
+            background: #1c1c51;
+        }
+
+        #wrap div {
+            display: inline-block;
+            font-size: 16px;
+        }
+
+        #wrap span {
+            font-size: 16px;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="content">
+            <span>周星驰</span>曾经有一份真诚的爱情放在我面前，我没有珍惜，
+            <!-- 等我失去的时候我才后悔莫及，人世间最痛苦的事莫过于此。 如果上天能够给我一个再来一次的机会，我会对那个女孩子说三个字：我爱你。 如果非要在这份爱上加上一个期限，我希望是…… -->
+            <!-- 一万年 -->
+        </div>
+        <div id="last">
+            <!-- <span>周星驰</span>曾经有一份真诚的爱情放在我面前，我没有珍惜，等我失去的时候我才后悔莫及，人世间最痛苦的事莫过于此。 如果上天能够给我一个再来一次的机会，我会对那个女孩子说三个字：我爱你。 如果非要在这份爱上加上一个期限，我希望是……
+            一万年 -->
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+            var wrap = document.getElementById('wrap')
+            let content = document.getElementById('content');
+            let last = document.getElementById('last');
+            last.innerHTML = content.innerHTML
+            content.style.paddingRight = 400+"px"
+            // content.style.paddingBottom = 120+"px"
+            // move()
+            var timer = window.setInterval(move, 20);
+            wrap.onmouseover = function () {
+                window.clearInterval(timer);
+            };
+            wrap.onmouseout = function () {
+                timer = window.setInterval(move, 20);
+            };
+            function move() {
+                console.log(wrap.scrollLeft,content.offsetWidth)
+                if (wrap.scrollLeft > content.offsetWidth) {
+                    wrap.scrollLeft = 0;
+                }else{
+                    wrap.scrollLeft++
+                }
+                // setTimeout("move()",50);   
+            }
+        
+
+    </script>
+
+</body>
+
+</html>

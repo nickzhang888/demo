@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let object = {}
+        //使用Object.defineProperty() 定义对象属性时，
+        //如已设置 set 或 get, 就不能设置 writable 和 value 中的任何一个了，不然会报错误
+        Object.defineProperty(object, "key", {
+            value: "old",
+            writable: true,  //是否可以修改
+            enumerable: true,  //是否可以枚举
+            configurable: true,  //是否可以删除 
+            // get() {},
+            // set() {}
+        })
+        // 获取对象属性的描述
+        let value = Object.getOwnPropertyDescriptor(object, 'key')
+        console.log(value);
+
+
+        function notifyRender() {
+            console.log("通知订阅者更新");
+        }
+        function collectDeps() {
+            console.log("收集依赖");
+        }
+        // 监听器Observer,取值和赋值的拦截处理
+        function defineReactive(obj, key, value) {
+            observe(value);   // 递归遍历所有子属性
+            // console.log(obj);
+            Object.defineProperty(obj, key, {
+                enumerable: true,  //是否可以枚举
+                configurable: true, //是否可以删除
+                get() {
+                    collectDeps() // 收集依赖
+                    return value
+                },
+                set(newVal) {
+                    if (newVal !== value) {
+                        notifyRender() // 通知订阅者更新
+                        value = newVal;
+                        console.log('属性' + key + '已经被监听了，现在值为' + value);
+                    }
+                }
+            })
+        }
+        function observe(obj) {
+            if (typeof obj === 'object' && obj !== null) {
+                Object.keys(obj).forEach(key => {
+                    defineReactive(obj, key, obj[key]);
+                })
+            }
+        }
+
+        var obj = {
+            name: 'nick',
+            love: {
+                activity: 'play'
+            },
+        }
+        observe(obj)
+        obj.name = "cheney"   //属性name已经被监听了，现在值为cheney
+        obj.love.activity = "js编程"   //属性name已经被监听了，现在值为js编程
+        let a = obj.slice()
+        a.sex = "man"   //属性name已经被监听了，现在值为js编程
+    </script>
+</body>
+
+</html>
