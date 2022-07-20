@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="big" class="big">
+        <div id="middle" class="middle">
+            <div id="small" class="small"></div>
+        </div>
+    </div>
+</body>
+<style>
+    .big {
+        background: red;
+        height: 50vh;
+        width: 50vh;
+    }
+
+    .middle {
+        background: green;
+        height: 30vh;
+        width: 30vh;
+    }
+
+    .small {
+        background: blue;
+        height: 10vh;
+        width: 10vh;
+    }
+</style>
+<script>
+    // target：触发事件的元素
+    // currentTarget：事件绑定的元素
+    // 当事件不支持冒泡的时候，两者指的是同一个元素。
+    // 当事件支持冒泡时：比如父元素和子元素都绑定click事件，当点击子元素时，父元素的事件也会触发，此时父元素事件的currentTarget指向父元素，target指向子元素。
+
+    big.addEventListener('click', function (e) {
+        console.log("big",e.currentTarget,e.target)
+    }, false)
+    middle.addEventListener('click', function (e) {
+        console.log('middle',e.currentTarget,e.target)
+    }, false)
+    small.addEventListener('click', function (e) {
+        console.log('small',e.currentTarget,e.target)
+    }, false)
+
+  
+</script>
+
+</html>
