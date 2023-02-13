@@ -21,20 +21,23 @@
 
 <body>
     <div class="box">
-        <img src="./loading.gif" data="./imgs/1.png" alt="">
-        <img src="./loading.gif" data="./imgs/2.png" alt="">
-        <img src="./loading.gif" data="./imgs/3.png" alt="">
-        <img src="./loading.gif" data="./imgs/4.png" alt="">
-        <img src="./loading.gif" data="./imgs/5.png" alt="">
-        <img src="./loading.gif" data="./imgs/6.png" alt="">
-        <img src="./loading.gif" data="./imgs/7.png" alt="">
-        <img src="./loading.gif" data="./imgs/8.png" alt="">
-        <img src="./loading.gif" data="./imgs/9.png" alt="">
+        <div class="show1">
+            <img src="./loading.gif" data="./imgs/1.png" alt="">
+            <img src="./loading.gif" data="./imgs/2.png" alt="">
+            <img src="./loading.gif" data="./imgs/3.png" alt="">
+            <img src="./loading.gif" data="./imgs/4.png" alt="">
+            <img src="./loading.gif" data="./imgs/5.png" alt="">
+            <img src="./loading.gif" data="./imgs/6.png" alt="">
+            <img src="./loading.gif" data="./imgs/7.png" alt="">
+            <img src="./loading.gif" data="./imgs/8.png" alt="">
+            <img src="./loading.gif" data="./imgs/9.png" alt="">
+        </div>
     </div>
     <!-- 纯js -->
     <script>
         let imgs = document.querySelectorAll('img')
         let box = document.querySelector('.box')
+        let show1 = document.querySelector('.show1')
         let n = 0//避免滚动时每次都从0开始
         function lazyLoad(e) {
             let clientHeight = window.innerHeight
@@ -49,7 +52,6 @@
                     n = i + 1
                     continue
                 }
-                console.log(scrollTop, clientHeight, imgs[i].offsetTop);
                 //如果图片滚动的距离+浏览器高度>=图片距离顶部的距离
                 if (scrollTop + clientHeight >= imgs[i].offsetTop) {
                     console.log(i);
@@ -63,10 +65,18 @@
                 }
             };
         }
+        function play() {
+            if (box.scrollTop + box.clientHeight >= show1.offsetHeight) {
+                box.scrollTop = 0;
+            } else {
+                box.scrollTop++;
+            }
+        }
         // 先初始化执行下
         lazyLoad()
         //再滚动式调用
         box.onscroll = lazyLoad
+        var timer = setInterval(play, 10);
     </script>
 
 </body>
