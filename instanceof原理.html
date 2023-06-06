@@ -10,19 +10,19 @@
 <body>
     <script>
         // instanceof的用途是判断一个对象是否在某个对象原型链上。或者说判断一个对象是某个对象的实例
-        
+
         let a = function () { }
         function myInstanceof(l, r) {
             let right = r.prototype
-            while (l?.__proto__) {
-                l = l.__proto__
+            while (l) {
                 if (l.__proto__ === right) {
                     return true
                 }
+                l = l.__proto__
             }
             return false
         }
-        console.log(myInstanceof(a, Object)); //false
+        console.log(myInstanceof(a, Function));
 
 
         let obj = {
