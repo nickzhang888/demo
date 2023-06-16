@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="marquee-container">
+      <div class="marquee-content">系统维护中，请联系管理员</div>
+    </div>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        font-size: 46px;
+        color: red;
+        background: url(./1.png);
+      }
+      .marquee-container {
+        overflow: hidden;
+        margin: 20px auto;
+        text-align: center;
+        width: 100%;
+      }
+
+      .marquee-content {
+        display: inline-block;
+        white-space: nowrap;
+        animation: marquee 10s linear infinite;
+      }
+
+      @keyframes marquee {
+        0% {
+          transform: translateX(100%);
+        }
+        50% {
+          transform: translateX(0%);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      .marquee-active .marquee-content {
+        animation: marquee 10s linear infinite;
+      }
+    </style>
+
+    <script>
+      let marqueeContainer = document.querySelector(".marquee-container");
+      let marqueeContent = document.querySelector(".marquee-content");
+
+      let containerWidth = marqueeContainer.offsetWidth;
+      let contentWidth = marqueeContent.offsetWidth;
+    </script>
+  </body>
+</html>
