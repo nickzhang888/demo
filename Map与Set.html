@@ -9,24 +9,23 @@
 
 <body>
     <script>
-      // Set和Map类似，也是一组key的集合，但不存储value。由于key不能重复，所以，在Set中，没有重复的key。
-      // entries() 方法返回一个数组的迭代对象，该对象包含数组的键值对 (key/value)。
-      // 迭代对象中数组的索引值作为 key， 数组元素作为 value。
+        // Set和Map类似，也是一组key的集合，但不存储value。由于key不能重复，所以，在Set中，没有重复的key。
+        // entries() 方法返回一个数组的迭代对象，该对象包含数组的键值对 (key/value)。
+        // 迭代对象中数组的索引值作为 key， 数组元素作为 value。
+        //对象
         let obj = {
             name: 'china',
             city: ["beijing", 'hanghai', 'nanjing']
         }
-        console.log(Object.entries(obj));
-        let map = new Map(obj)
-        console.log(map);
+        let map = new Map(Object.entries(obj))
         let c = map.get('city')
-
+        console.info(c);
+        //数组
         let arr = [
             ['name', 'china'],
             ['city', "beijing, hanghai, nanjing"]
         ]
         const m = new Map()
-       
         m.set('name', 'nick')
         const length = m.size
         const name = m.get('name')
@@ -42,7 +41,11 @@
         set.delete('beijing')
         const res = set.has('nanjing')
         console.log(Object.prototype.toString.call(set));
-        console.log(len,add,res);
+        console.log(len, add, res);
+
+
+
+
     </script>
 </body>
 

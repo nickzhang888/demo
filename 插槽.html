@@ -18,9 +18,7 @@
         </div>
     </template>
     <script>
-        export default {
-            name: 'child'
-        }
+
     </script>
     <!-- 父组件 -->
     <template>
@@ -77,11 +75,11 @@
     </Child>
     插槽显不显示、怎样显示是由父组件来控制的，而插槽在哪里显示就由子组件来进行控制
     <template>
-      <div>
-        <Child>
-           <div slot="jumpIcon">跳起来</div>
-        </Child>
-      </div>
+        <div>
+            <Child>
+                <div slot="jumpIcon">跳起来</div>
+            </Child>
+        </div>
     </template>
 </body>
 
