@@ -54,24 +54,25 @@
         // var fun = obj.sayName()
         // fun()   //最后fun是由window调用的,所以name为nick
 
-        var name = 'cheng';
+        let name = 'simple';
         // ES5中，setTimeout里面的函数的执行上下文为全局上下文
         function delay() {
             setTimeout(function () {
-                console.log('name:', this.name);
+                console.log('一般函数:', this.name);
             }, 100)
         }
         //在ES6的箭头函数中，setTimeout里面，如果执行了一个箭头函数，那么这个函数的执行上下文为定义这个箭头函数所在的函数
         function arrowDelay() {
             setTimeout(() => {
-                console.log('name:', this.name);
+                console.log('箭头函数:', this.name);
             }, 100)
         }
         let obj = {
-            name: 'latency'
+            name: 'arrow'
         }
-        delay.apply(obj)               //name: cheng
-        arrowDelay.apply(obj)          //name: latency
+        delay.apply(obj)
+        arrowDelay.apply(obj)
+
         // function People(name, age) {
         //     this.name = name
         //     this.age = age
